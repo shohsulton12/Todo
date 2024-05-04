@@ -5,7 +5,8 @@ conn = psycopg2.connect(database="n42",
                         user="postgres",
                         password="123",
                         host="localhost",
-                        port=5432)
+                        port=5432,
+                        options="-c search_path=dbo,sql")
 
 cur = conn.cursor()
 
@@ -32,8 +33,9 @@ create_todo_table = """
 
 def commit(func):
     def wrapper(*args, **kwargs):
-        func()
+        result = func(*args, **kwargs)
         conn.commit()
+        return result
 
     return wrapper
 
