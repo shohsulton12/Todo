@@ -22,4 +22,4 @@ class Session:
         return self.session
 
 
-
+session = Session()
